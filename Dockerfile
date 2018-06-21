@@ -1,14 +1,30 @@
-ARG MARIADB_VERSION=10.1
+FROM mback2k/debian:stretch
 
-FROM mariadb:${MARIADB_VERSION}
+RUN adduser --disabled-password --disabled-login --system --group \
+        --uid 3306 --home /var/lib/mysql mysql
 
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb /opt/dumb-init_1.2.1_amd64.deb
-RUN dpkg -i /opt/dumb-init_1.2.1_amd64.deb
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        mariadb-server mariadb-client && \
+    apt-get clean
 
-RUN echo "#!/bin/sh" > /usr/local/sbin/mysqld; \
-    echo "exec /usr/sbin/mysqld \$@" >> /usr/local/sbin/mysqld; \
-    chown --reference=/usr/sbin/mysqld /usr/local/sbin/mysqld; \
-    chmod --reference=/usr/sbin/mysqld /usr/local/sbin/mysqld;
+EXPOSE 3306
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/local/bin/docker-entrypoint.sh"]
-CMD ["mysqld"]
+RUN find /etc/mysql/ -name '*.cnf' -print0 \
+    | xargs -0 grep -lZE '^(bind-address|log)' \
+    | xargs -0 sed -Ei 's/^(bind-address|log)/#&/'
+RUN echo '[mysqld]\nskip-host-cache\nskip-name-resolve' \
+    > /etc/mysql/conf.d/docker.cnf
+
+RUN mkdir -p /var/lib/mysql /var/run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+
+WORKDIR /var/lib
+RUN tar cfvz mysql-content.tar.gz mysql
+
+VOLUME /var/lib/mysql
+USER mysql
+
+ADD docker-entrypoint.d/ /run/docker-entrypoint.d/
+
+CMD ["/usr/sbin/mysqld"]
