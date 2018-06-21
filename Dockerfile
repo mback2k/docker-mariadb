@@ -21,6 +21,7 @@ RUN chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 
 WORKDIR /var/lib
 RUN tar cfvz mysql-content.tar.gz mysql
+RUN chmod 640 mysql-content.tar.gz
 
 VOLUME /var/lib/mysql
 
