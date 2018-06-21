@@ -23,8 +23,7 @@ WORKDIR /var/lib
 RUN tar cfvz mysql-content.tar.gz mysql
 
 VOLUME /var/lib/mysql
-USER mysql
 
 ADD docker-entrypoint.d/ /run/docker-entrypoint.d/
 
-CMD ["/usr/sbin/mysqld"]
+CMD ["/usr/sbin/mysqld", "--user=mysql"]
