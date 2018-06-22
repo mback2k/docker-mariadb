@@ -1,0 +1,4 @@
+[mysqld]
+init-file=/etc/mysql/docker-init-file.sql
+skip-host-cache
+skip-name-resolve

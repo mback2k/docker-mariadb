@@ -13,17 +13,21 @@ EXPOSE 3306
 RUN find /etc/mysql/ -name '*.cnf' -print0 \
     | xargs -0 grep -lZE '^(bind-address|log)' \
     | xargs -0 sed -Ei 's/^(bind-address|log)/#&/'
-RUN echo '[mysqld]\nskip-host-cache\nskip-name-resolve' \
-    > /etc/mysql/conf.d/docker.cnf
 
 RUN mkdir -p /var/lib/mysql /var/run/mysqld
 RUN chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 
 WORKDIR /var/lib
+
 RUN tar cfvz mysql-content.tar.gz mysql
 RUN chmod 640 mysql-content.tar.gz
 
 VOLUME /var/lib/mysql
+
+ADD docker-mysqld.cnf /etc/mysql/conf.d/docker-mysqld.cnf
+
+ENV MYSQL_ROOT_HOST %
+ENV MYSQL_USER_HOST %
 
 ADD docker-entrypoint.d/ /run/docker-entrypoint.d/
 
