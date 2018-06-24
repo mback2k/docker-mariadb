@@ -22,7 +22,7 @@ fi
 fi
 
 if [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
-if [ -n "${MYSQL_ROOT_HOST}" -a "${MYSQL_ROOT_HOST}" != 'localhost' ]; then
+if [ -n "${MYSQL_ROOT_HOST}" -a "${MYSQL_ROOT_HOST}" != "localhost" ]; then
 if [ -f "/etc/mysql/docker-init-file.sql" ]; then
     echo "CREATE USER IF NOT EXISTS 'root'@'${MYSQL_ROOT_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" >> /etc/mysql/docker-init-file.sql
     echo "SET PASSWORD FOR 'root'@'${MYSQL_ROOT_HOST}'=PASSWORD('${MYSQL_ROOT_PASSWORD}');" >> /etc/mysql/docker-init-file.sql
