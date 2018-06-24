@@ -6,6 +6,8 @@ RUN adduser --disabled-password --disabled-login --system --group \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         mariadb-server mariadb-client && \
+    apt-get install -y --no-install-recommends \
+        rsync grep && \
     apt-get clean
 
 EXPOSE 3306

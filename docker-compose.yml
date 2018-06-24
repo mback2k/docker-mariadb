@@ -1,0 +1,88 @@
+version: '3.1'
+
+services:
+  mysql-1:
+    image: mback2k/mariadb
+    environment:
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=test
+      - MYSQL_ROOT_PASSWORD=test
+      - WSREP_CLUSTER_ADDRESS=mysql-1
+      - WSREP_CLUSTER_NAME=test
+      - WSREP_CLUSTER_ROLE=seed
+      - WSREP_NODE_ADDRESS=^10.33.*.*
+      - WSREP_NODE_NAME=mysql-1
+    networks:
+      galera_network:
+        aliases:
+          - mysql
+      mysql_backend:
+        aliases:
+          - mysql
+    volumes:
+      - ./data1:/var/lib/mysql
+  mysql-2:
+    image: mback2k/mariadb
+    environment:
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=test
+      - MYSQL_ROOT_PASSWORD=test
+      - WSREP_CLUSTER_ADDRESS=mysql-1
+      - WSREP_CLUSTER_NAME=test
+      - WSREP_CLUSTER_ROLE=node
+      - WSREP_NODE_ADDRESS=^10.33.*.*
+      - WSREP_NODE_NAME=mysql-2
+    networks:
+      galera_network:
+        aliases:
+          - mysql
+      mysql_backend:
+        aliases:
+          - mysql
+    volumes:
+      - ./data2:/var/lib/mysql
+  mysql-3:
+    image: mback2k/mariadb
+    environment:
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=test
+      - MYSQL_ROOT_PASSWORD=test
+      - WSREP_CLUSTER_ADDRESS=mysql-1
+      - WSREP_CLUSTER_NAME=test
+      - WSREP_CLUSTER_ROLE=node
+      - WSREP_NODE_ADDRESS=^10.33.*.*
+      - WSREP_NODE_NAME=mysql-3
+    networks:
+      galera_network:
+        aliases:
+          - mysql
+      mysql_backend:
+        aliases:
+          - mysql
+    volumes:
+      - ./data3:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8080:80"
+    networks:
+      - mysql_backend
+    environment:
+      PMA_HOST: "mysql"
+      PMA_PORT: "3306"
+
+networks:
+  mysql_backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.1.0.0/16
+  galera_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.33.0.0/16
