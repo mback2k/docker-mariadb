@@ -1,4 +1,7 @@
 [mysqld]
-init-file=/etc/mysql/docker-init-file.sql
-skip-host-cache
-skip-name-resolve
+init_file=/etc/mysql/docker-init-file.sql
+skip_host_cache
+skip_name_resolve
+innodb_file_format=Barracuda
+innodb_file_per_table=1
+innodb_large_prefix=1
