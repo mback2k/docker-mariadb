@@ -22,6 +22,7 @@ services:
           - mysql
     volumes:
       - ./data1:/var/lib/mysql
+      - ./logs1:/var/log/mysql
   mysql-2:
     image: mback2k/mariadb
     environment:
@@ -43,6 +44,7 @@ services:
           - mysql
     volumes:
       - ./data2:/var/lib/mysql
+      - ./logs2:/var/log/mysql
   mysql-3:
     image: mback2k/mariadb
     environment:
@@ -64,6 +66,7 @@ services:
           - mysql
     volumes:
       - ./data3:/var/lib/mysql
+      - ./logs3:/var/log/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
