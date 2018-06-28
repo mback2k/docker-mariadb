@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 if [ -f "/etc/mysql/conf.d/docker-galera.cnf" ]; then

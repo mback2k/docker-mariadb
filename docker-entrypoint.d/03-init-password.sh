@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 if [ -f "${MYSQL_ROOT_PASSWORD_FILE}" ]; then
