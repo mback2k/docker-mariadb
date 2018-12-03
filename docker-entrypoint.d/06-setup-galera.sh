@@ -5,6 +5,10 @@ if [ -f "${MYSQL_ROOT_PASSWORD_FILE}" ]; then
     MYSQL_ROOT_PASSWORD="$(< "${MYSQL_ROOT_PASSWORD_FILE}")"
 fi
 
+if [ -z "${WSREP_NODE_NAME}" ]; then
+    WSREP_NODE_NAME="$(hostname)"
+fi
+
 if [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
 if [ -n "${WSREP_CLUSTER_ADDRESS}" ]; then
 if [ -n "${WSREP_CLUSTER_NAME}" ]; then
