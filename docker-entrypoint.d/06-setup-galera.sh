@@ -27,7 +27,7 @@ if [ -n "${WSREP_NODE_NAME}" ]; then
     echo "wsrep_node_name='${WSREP_NODE_NAME}'" >> /etc/mysql/conf.d/docker-galera.cnf
     echo "wsrep_sst_auth='root:${MYSQL_ROOT_PASSWORD}'" >> /etc/mysql/conf.d/docker-galera.cnf
     echo "wsrep_sst_method=mysqldump" >> /etc/mysql/conf.d/docker-galera.cnf
-    echo "wsrep_notify_cmd=/usr/local/docker-galera-state.sh" >> /etc/mysql/conf.d/docker-galera.cnf
+    echo "wsrep_notify_cmd=/usr/local/bin/docker-galera-state.sh" >> /etc/mysql/conf.d/docker-galera.cnf
     echo "binlog_format=ROW" >> /etc/mysql/conf.d/docker-galera.cnf
     echo "log_bin=/var/log/mysql/mysql-bin.log" >> /etc/mysql/conf.d/docker-galera.cnf
     echo "log_slave_updates" >> /etc/mysql/conf.d/docker-galera.cnf
