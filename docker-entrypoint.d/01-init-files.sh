@@ -3,8 +3,8 @@ set -e
 
 if [ ! -f "/etc/mysql/debian.cnf" ]; then
     touch /etc/mysql/debian.cnf
-    chown root:root /etc/mysql/debian.cnf
-    chmod 600 /etc/mysql/debian.cnf
+    chown root:mysql /etc/mysql/debian.cnf
+    chmod 640 /etc/mysql/debian.cnf
 fi
 
 if [ ! -f "/etc/mysql/docker-init-file.sql" ]; then
