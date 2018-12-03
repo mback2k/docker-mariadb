@@ -38,3 +38,5 @@ ENV MYSQL_USER_HOST %
 ADD docker-entrypoint.d/ /run/docker-entrypoint.d/
 
 CMD ["/usr/sbin/mysqld", "--user=mysql"]
+
+HEALTHCHECK CMD grep -e '^Synced$' /var/lib/mysql/docker-galera.state || exit 1
