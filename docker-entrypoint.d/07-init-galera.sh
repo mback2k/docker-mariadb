@@ -8,4 +8,6 @@ if [ -n "${WSREP_ROLE}" -a "${WSREP_ROLE}" = "seed" -a ! -s "/var/lib/mysql/gras
 fi
 fi
 
+echo "Undefined" > /var/lib/mysql/docker-galera.state
+
 exit 0
