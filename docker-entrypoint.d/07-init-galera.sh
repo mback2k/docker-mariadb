@@ -10,4 +10,7 @@ fi
 
 echo "Undefined" > /var/lib/mysql/docker-galera.state
 
+chown mysql:mysql /var/lib/mysql/docker-galera.state
+chmod 660 /var/lib/mysql/docker-galera.state
+
 exit 0
