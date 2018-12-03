@@ -96,7 +96,7 @@ echo "$STATUS" > /var/lib/mysql/docker-galera.state
 
 # Undefined means node is shutting down
 if [ "$STATUS" != "Undefined" ]; then
-    $COM | mysql --batch --defaults-file=/etc/mysql/debian.cnf
+    $COM | mysql --defaults-file=/etc/mysql/debian.cnf --batch
 fi
 
 exit 0
