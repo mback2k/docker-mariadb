@@ -27,6 +27,10 @@ RUN chmod 640 mysql-content.tar.gz
 VOLUME /var/lib/mysql
 
 ADD docker-mysqld.cnf /etc/mysql/conf.d/docker-mysqld.cnf
+ADD docker-galera-state.sh /usr/local/docker-galera-state.sh
+
+RUN chown mysql:mysql /usr/local/docker-galera-state.sh
+RUN chmod 700 /usr/local/docker-galera-state.sh
 
 ENV MYSQL_ROOT_HOST %
 ENV MYSQL_USER_HOST %
